@@ -24,7 +24,7 @@ export const Home: React.FunctionComponent = () => {
               <UserAvatar source={avatarDefault}></UserAvatar>
             </UserAvatarButton>
             <UserInfoDetail>
-              <UserGreeting>Olá, </UserGreeting>
+              <UserGreeting>Hello, </UserGreeting>
               <UserName>Lucas</UserName>
             </UserInfoDetail>
           </UserInfo>
