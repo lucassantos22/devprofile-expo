@@ -1,5 +1,16 @@
 import React from 'react';
-import { Container, Header } from './styles';
+import {
+  Container,
+  Header,
+  Icon,
+  UserAvatar,
+  UserAvatarButton,
+  UserGreeting,
+  UserInfo,
+  UserInfoDetail,
+  UserName,
+  UserWrapper,
+} from './styles';
 
 import avatarDefault from '../../assets/avatar01.jpeg';
 
@@ -17,6 +28,7 @@ export const Home: React.FunctionComponent = () => {
               <UserName>Lucas</UserName>
             </UserInfoDetail>
           </UserInfo>
+          <Icon name="power" />
         </UserWrapper>
       </Header>
     </Container>
