@@ -8,7 +8,7 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 
 import theme from './src/global/styles/theme';
-import { SignUp } from './src/pages/SignUp';
+import { Routes } from './src/routes';
 
 const App: React.FunctionComponent = () => {
   const [fontsLoaded] = useFonts({
@@ -23,7 +23,7 @@ const App: React.FunctionComponent = () => {
   return (
     <NavigationContainer>
       <ThemeProvider theme={theme}>
-        <SignUp />
+        <Routes />
       </ThemeProvider>
     </NavigationContainer>
   );
