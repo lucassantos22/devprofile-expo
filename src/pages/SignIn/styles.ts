@@ -23,8 +23,8 @@ export const Title = styled.Text`
 `;
 
 export const Logo = styled.Image`
-  width: ${RFValue(160)}px;
-  height: ${RFValue(160)}px;
+  width: ${RFValue(130)}px;
+  height: ${RFValue(130)}px;
   margin-bottom: ${RFValue(64)}px;
 `;
 
