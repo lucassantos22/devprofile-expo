@@ -1,25 +1,45 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Button } from '../../components/Form/Button';
 import { Input } from '../../components/Form/Input';
-import { Container, Content, Title } from './styles';
+import {
+  BackToSignIn,
+  BackToSignInTitle,
+  Container,
+  Content,
+  Logo,
+  Title,
+} from './styles';
+import logo from '../../assets/logo.png';
+import { Icon } from '../SignIn/styles';
 
 export const SignUp: React.FunctionComponent = () => {
   return (
-    <ScrollView
-      keyboardShouldPersistTaps="handled"
-      contentContainerStyle={{ flex: 1 }}
+    <KeyboardAvoidingView
+      enabled
+      style={{ flex: 1 }}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
     >
-      <Container>
-        <Content>
-          <Title>Create your account</Title>
-          <Input placeholder="Name" />
-          <Input placeholder="Email" />
-          <Input placeholder="Password" />
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={{ flex: 1 }}
+      >
+        <Container>
+          <Content>
+            <Logo source={logo} />
+            <Title>Create your account</Title>
+            <Input placeholder="Name" />
+            <Input placeholder="Email" />
+            <Input placeholder="Password" />
 
-          <Button title="Create" />
-        </Content>
-      </Container>
-    </ScrollView>
+            <Button title="Create" />
+          </Content>
+        </Container>
+      </ScrollView>
+      <BackToSignIn>
+        <Icon name="arrow-left" />
+        <BackToSignInTitle>Log in</BackToSignInTitle>
+      </BackToSignIn>
+    </KeyboardAvoidingView>
   );
 };
