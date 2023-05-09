@@ -6,6 +6,9 @@ import {
   Title,
   ForgotPasswordButton,
   ForgotPasswordTitle,
+  CreateAccount,
+  Icon,
+  CreateAccountTitle,
 } from './styles';
 import { Input } from '../../components/Form/Input';
 import { ScrollView } from 'react-native';
@@ -14,22 +17,28 @@ import logo from '../../assets/logo.png';
 
 export const SignIn: React.FunctionComponent = () => {
   return (
-    <ScrollView
-      keyboardShouldPersistTaps="handled"
-      contentContainerStyle={{ flex: 1 }}
-    >
-      <Container>
-        <Content>
-          <Logo source={logo} />
-          <Title>Login</Title>
-          <Input placeholder="Email" />
-          <Input placeholder="Password" />
-          <Button title="Login" />
-          <ForgotPasswordButton>
-            <ForgotPasswordTitle>Esqueci minha senha</ForgotPasswordTitle>
-          </ForgotPasswordButton>
-        </Content>
-      </Container>
-    </ScrollView>
+    <>
+      <ScrollView
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={{ flex: 1 }}
+      >
+        <Container>
+          <Content>
+            <Logo source={logo} />
+            <Title>Login</Title>
+            <Input placeholder="Email" />
+            <Input placeholder="Password" />
+            <Button title="Login" />
+            <ForgotPasswordButton>
+              <ForgotPasswordTitle>Forgot my password</ForgotPasswordTitle>
+            </ForgotPasswordButton>
+          </Content>
+        </Container>
+      </ScrollView>
+      <CreateAccount>
+        <Icon name="log-in" />
+        <CreateAccountTitle>Create account</CreateAccountTitle>
+      </CreateAccount>
+    </>
   );
 };
