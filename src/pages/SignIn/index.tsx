@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 import {
   Container,
   Content,
@@ -16,6 +17,7 @@ import { Button } from '../../components/Form/Button';
 import logo from '../../assets/logo.png';
 
 export const SignIn: React.FunctionComponent = () => {
+  const navigation = useNavigation<any>();
   return (
     <KeyboardAvoidingView
       enabled
@@ -41,7 +43,7 @@ export const SignIn: React.FunctionComponent = () => {
           </Content>
         </Container>
       </ScrollView>
-      <CreateAccount>
+      <CreateAccount onPress={() => navigation.navigate('SignUp')}>
         <Icon name="log-in" />
         <CreateAccountTitle>Create account</CreateAccountTitle>
       </CreateAccount>
