@@ -24,8 +24,11 @@ interface IFormInputs {
 }
 
 const formSchema = yup.object({
-  email: yup.string().email('Invalid e-mail').required('Email cannot be empty'),
-  password: yup.string().required('Password cannot be empty'),
+  email: yup
+    .string()
+    .email('Invalid e-mail.')
+    .required('E-mail cannot be empty.'),
+  password: yup.string().required('Password cannot be empty.'),
 });
 
 export const SignIn: React.FunctionComponent = () => {

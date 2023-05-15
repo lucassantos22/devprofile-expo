@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useForm, FieldValues } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
 import { Button } from '../../components/Form/Button';
 import {
@@ -19,9 +21,22 @@ interface IFormInput {
   [name: string]: any;
 }
 
+const formSchema = yup.object({
+  name: yup.string().required('Name cannot be empty.'),
+  email: yup
+    .string()
+    .email('Invalid e-mail.')
+    .required('E-mail cannot be empty.'),
+  password: yup.string().required('Password cannot be empty.'),
+});
+
 export const SignUp: React.FunctionComponent = () => {
   const navigation = useNavigation<any>();
-  const { handleSubmit, control } = useForm<FieldValues>();
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<FieldValues>({ resolver: yupResolver(formSchema) });
 
   function handleSignUp({ name, email, password }: IFormInput) {
     console.log({ name, email, password });
@@ -46,6 +61,7 @@ export const SignUp: React.FunctionComponent = () => {
               autoCorrect={false}
               name="name"
               placeholder="Name"
+              error={errors.name && errors.name.message}
             />
             <InputControl
               control={control}
@@ -54,6 +70,7 @@ export const SignUp: React.FunctionComponent = () => {
               name="email"
               placeholder="Email"
               keyboardType="email-address"
+              error={errors.email && errors.email.message}
             />
             <InputControl
               control={control}
@@ -62,6 +79,7 @@ export const SignUp: React.FunctionComponent = () => {
               name="password"
               placeholder="Password"
               secureTextEntry
+              error={errors.password && errors.password.message}
             />
 
             <Button title="Create" onPress={handleSubmit(handleSignUp)} />
