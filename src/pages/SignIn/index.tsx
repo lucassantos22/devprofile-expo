@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useForm, FieldValues } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 import {
   Container,
   Content,
@@ -21,8 +23,17 @@ interface IFormInputs {
   [email: string]: any;
 }
 
+const formSchema = yup.object({
+  email: yup.string().email('Invalid e-mail').required('Email cannot be empty'),
+  password: yup.string().required('Password cannot be empty'),
+});
+
 export const SignIn: React.FunctionComponent = () => {
-  const { handleSubmit, control } = useForm<FieldValues>();
+  const {
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<FieldValues>({ resolver: yupResolver(formSchema) });
   const navigation = useNavigation<any>();
 
   function handleSignIn({ email, password }: IFormInputs) {
@@ -52,6 +63,7 @@ export const SignIn: React.FunctionComponent = () => {
               name="email"
               placeholder="Email"
               keyboardType="email-address"
+              error={errors.email && errors.email.message}
             />
             <InputControl
               autoCapitalize="none"
@@ -60,6 +72,7 @@ export const SignIn: React.FunctionComponent = () => {
               name="password"
               placeholder="Password"
               secureTextEntry
+              error={errors.password && errors.password.message}
             />
             <Button title="Login" onPress={handleSubmit(handleSignIn)} />
             <ForgotPasswordButton>
