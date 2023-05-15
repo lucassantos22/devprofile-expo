@@ -2,17 +2,19 @@ import React from 'react';
 import { TextInputProps } from 'react-native/types';
 import { Control, Controller } from 'react-hook-form';
 
-import { Container } from './styles';
+import { Container, Error } from './styles';
 import { Input } from '../Input';
 
 interface Props extends TextInputProps {
   control: Control;
   name: string;
+  error: string;
 }
 
 export const InputControl: React.FunctionComponent<Props> = ({
   control,
   name,
+  error,
   ...otherProps
 }) => {
   return (
@@ -24,6 +26,7 @@ export const InputControl: React.FunctionComponent<Props> = ({
         )}
         name={name}
       />
+      {error && <Error>{error}</Error>}
     </Container>
   );
 };
