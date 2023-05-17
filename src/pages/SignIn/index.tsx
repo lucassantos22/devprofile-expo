@@ -15,7 +15,13 @@ import {
   CreateAccountTitle,
 } from './styles';
 import { InputControl } from '../../components/Form/InputControl';
-import { ScrollView, KeyboardAvoidingView, Platform, View } from 'react-native';
+import {
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+  View,
+  Alert,
+} from 'react-native';
 import { Button } from '../../components/Form/Button';
 import logo from '../../assets/logo.png';
 import { AuthContext } from '../../context/AuthContext';
@@ -33,7 +39,7 @@ const formSchema = yup.object({
 });
 
 export const SignIn: React.FunctionComponent = () => {
-  const auth = useContext(AuthContext);
+  const { signIn } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const {
     handleSubmit,
@@ -42,10 +48,16 @@ export const SignIn: React.FunctionComponent = () => {
   } = useForm<FieldValues>({ resolver: yupResolver(formSchema) });
   const navigation = useNavigation<any>();
 
-  function handleSignIn({ email, password }: IFormInputs) {
-    console.log(email, password);
-    setLoading(true);
-    auth.signIn();
+  async function handleSignIn({ email, password }: IFormInputs) {
+    const data = { email, password };
+    try {
+      setLoading(true);
+      await signIn(data);
+    } catch (error) {
+      Alert.alert('Authentication error', 'Verify your credentials');
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
