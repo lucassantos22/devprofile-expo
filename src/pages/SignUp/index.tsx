@@ -3,7 +3,13 @@ import { useNavigation } from '@react-navigation/native';
 import { useForm, FieldValues } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+} from 'react-native';
+import { api } from '../../services/api';
 import { Button } from '../../components/Form/Button';
 import {
   BackToSignIn,
@@ -16,6 +22,7 @@ import {
 import logo from '../../assets/logo.png';
 import { Icon } from '../SignIn/styles';
 import { InputControl } from '../../components/Form/InputControl';
+import axios from 'axios';
 
 interface IFormInput {
   [name: string]: any;
@@ -38,8 +45,18 @@ export const SignUp: React.FunctionComponent = () => {
     formState: { errors },
   } = useForm<FieldValues>({ resolver: yupResolver(formSchema) });
 
-  function handleSignUp({ name, email, password }: IFormInput) {
-    console.log({ name, email, password });
+  async function handleSignUp({ name, email, password }: IFormInput) {
+    const data = {
+      name,
+      email,
+      password,
+    };
+    try {
+      await api.post('users', data);
+      Alert.alert(`Hello ${name}!`, 'You can login now');
+    } catch (error) {
+      Alert.alert('Sign up error', 'Try again later');
+    }
   }
 
   return (
