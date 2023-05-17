@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useForm, FieldValues } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -34,6 +34,7 @@ const formSchema = yup.object({
 
 export const SignIn: React.FunctionComponent = () => {
   const auth = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
   const {
     handleSubmit,
     control,
@@ -43,7 +44,8 @@ export const SignIn: React.FunctionComponent = () => {
 
   function handleSignIn({ email, password }: IFormInputs) {
     console.log(email, password);
-    console.log(auth);
+    setLoading(true);
+    auth.signIn();
   }
 
   return (
@@ -80,7 +82,11 @@ export const SignIn: React.FunctionComponent = () => {
               secureTextEntry
               error={errors.password && errors.password.message}
             />
-            <Button title="Login" onPress={handleSubmit(handleSignIn)} />
+            <Button
+              title="Login"
+              onPress={handleSubmit(handleSignIn)}
+              disabled={loading || !!errors.password || !!errors.email}
+            />
             <ForgotPasswordButton>
               <ForgotPasswordTitle>Forgot my password</ForgotPasswordTitle>
             </ForgotPasswordButton>
