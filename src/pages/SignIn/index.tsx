@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useForm, FieldValues } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -18,6 +18,7 @@ import { InputControl } from '../../components/Form/InputControl';
 import { ScrollView, KeyboardAvoidingView, Platform, View } from 'react-native';
 import { Button } from '../../components/Form/Button';
 import logo from '../../assets/logo.png';
+import { AuthContext } from '../../context/AuthContext';
 
 interface IFormInputs {
   [email: string]: any;
@@ -32,6 +33,7 @@ const formSchema = yup.object({
 });
 
 export const SignIn: React.FunctionComponent = () => {
+  const auth = useContext(AuthContext);
   const {
     handleSubmit,
     control,
@@ -41,6 +43,7 @@ export const SignIn: React.FunctionComponent = () => {
 
   function handleSignIn({ email, password }: IFormInputs) {
     console.log(email, password);
+    console.log(auth);
   }
 
   return (
