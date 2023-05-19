@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { api } from '../services/api';
 import { IUser } from '../model/User';
@@ -62,4 +62,14 @@ export const AuthProvider: React.FunctionComponent<IProps> = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+
+export const useAuth = (): IAuthContext => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error(
+      'useAuth should be called only in components covered by AuthProvider',
+    );
+  }
+  return context;
 };
