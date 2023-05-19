@@ -14,9 +14,21 @@ import {
 
 import avatarDefault from '../../assets/avatar01.jpeg';
 import { useAuth } from '../../context/AuthContext';
+import { Alert } from 'react-native';
 
 export const Home: React.FunctionComponent = () => {
-  const { user } = useAuth();
+  const { user, signOut } = useAuth();
+
+  function handleSignOut() {
+    Alert.alert(`Hi ${user.name}!`, 'Do you really want to sign out?', [
+      {
+        text: 'No',
+        onPress: () => {},
+      },
+      { text: 'Yes', onPress: signOut },
+    ]);
+  }
+
   return (
     <Container>
       <Header>
@@ -34,7 +46,7 @@ export const Home: React.FunctionComponent = () => {
               <UserName>{user.name}</UserName>
             </UserInfoDetail>
           </UserInfo>
-          <Icon name="power" />
+          <Icon name="power" onPress={handleSignOut} />
         </UserWrapper>
       </Header>
     </Container>
