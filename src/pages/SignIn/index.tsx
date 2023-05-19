@@ -24,7 +24,7 @@ import {
 } from 'react-native';
 import { Button } from '../../components/Form/Button';
 import logo from '../../assets/logo.png';
-import { AuthContext } from '../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 
 interface IFormInputs {
   [email: string]: any;
@@ -39,7 +39,7 @@ const formSchema = yup.object({
 });
 
 export const SignIn: React.FunctionComponent = () => {
-  const { signIn } = useContext(AuthContext);
+  const { signIn } = useAuth();
   const [loading, setLoading] = useState(false);
   const {
     handleSubmit,
