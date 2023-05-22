@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useForm, FieldValues } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -99,7 +99,9 @@ export const SignIn: React.FunctionComponent = () => {
               onPress={handleSubmit(handleSignIn)}
               disabled={loading || !!errors.password || !!errors.email}
             />
-            <ForgotPasswordButton>
+            <ForgotPasswordButton
+              onPress={() => navigation.navigate('ForgotPassword')}
+            >
               <ForgotPasswordTitle>Forgot my password</ForgotPasswordTitle>
             </ForgotPasswordButton>
           </Content>
