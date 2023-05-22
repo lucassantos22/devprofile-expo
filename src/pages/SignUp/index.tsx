@@ -22,7 +22,6 @@ import {
 import logo from '../../assets/logo.png';
 import { Icon } from '../SignIn/styles';
 import { InputControl } from '../../components/Form/InputControl';
-import axios from 'axios';
 
 interface IFormInput {
   [name: string]: any;
