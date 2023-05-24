@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Alert } from 'react-native';
+
 import {
   Container,
   Header,
@@ -14,10 +16,23 @@ import {
 
 import avatarDefault from '../../assets/avatar01.jpeg';
 import { useAuth } from '../../context/AuthContext';
-import { Alert } from 'react-native';
+import { IUser } from '../../model/User';
+import { api } from '../../services/api';
 
 export const Home: React.FunctionComponent = () => {
+  const [users, setUsers] = useState<IUser[]>([]);
   const { user, signOut } = useAuth();
+
+  useEffect(() => {
+    async function fetch() {
+      const res = await api.get('users');
+      setUsers(res.data);
+    }
+
+    fetch();
+  }, []);
+
+  console.log(users);
 
   function handleSignOut() {
     Alert.alert(`Hi ${user.name}!`, 'Do you really want to sign out?', [
