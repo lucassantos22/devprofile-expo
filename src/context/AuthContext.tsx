@@ -38,6 +38,7 @@ export const AuthProvider: React.FunctionComponent<IProps> = ({ children }) => {
 
       if (token && user) {
         setData({ token, user: JSON.parse(user) });
+        api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       }
     }
 
@@ -53,6 +54,7 @@ export const AuthProvider: React.FunctionComponent<IProps> = ({ children }) => {
       const { token, user } = res.data;
       await AsyncStorage.setItem(tokenData, token);
       await AsyncStorage.setItem(userData, JSON.stringify(user));
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       setData({ token, user });
     } catch (error) {
       throw new Error(error as string);
