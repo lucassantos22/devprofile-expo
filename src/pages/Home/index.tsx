@@ -10,6 +10,9 @@ import {
   UserGreeting,
   UserInfo,
   UserInfoDetail,
+  UserList,
+  UserListEmpty,
+  UserListHeader,
   UserName,
   UserWrapper,
 } from './styles';
@@ -18,6 +21,7 @@ import avatarDefault from '../../assets/avatar01.jpeg';
 import { useAuth } from '../../context/AuthContext';
 import { IUser } from '../../model/User';
 import { api } from '../../services/api';
+import { User } from '../../components/User';
 
 export const Home: React.FunctionComponent = () => {
   const [users, setUsers] = useState<IUser[]>([]);
@@ -64,6 +68,17 @@ export const Home: React.FunctionComponent = () => {
           <Icon name="power" onPress={handleSignOut} />
         </UserWrapper>
       </Header>
+      <UserList
+        data={users}
+        keyExtractor={item => item.id}
+        renderItem={({ item }) => (
+          <User data={item} onPress={() => console.log('oi')} />
+        )}
+        ListHeaderComponent={<UserListHeader>Users</UserListHeader>}
+        ListEmptyComponent={
+          <UserListEmpty>Oops.. there are no registers</UserListEmpty>
+        }
+      />
     </Container>
   );
 };
