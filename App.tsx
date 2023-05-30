@@ -6,6 +6,7 @@ import {
   Roboto_700Bold,
 } from '@expo-google-fonts/roboto';
 import { NavigationContainer } from '@react-navigation/native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import theme from './src/global/styles/theme';
 import { Routes } from './src/routes';
@@ -23,14 +24,16 @@ const App: React.FunctionComponent = () => {
   }
 
   return (
-    <NavigationContainer>
-      <StatusBar backgroundColor="transparent" translucent />
-      <ThemeProvider theme={theme}>
-        <AuthProvider>
-          <Routes />
-        </AuthProvider>
-      </ThemeProvider>
-    </NavigationContainer>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <NavigationContainer>
+        <StatusBar backgroundColor="transparent" translucent />
+        <ThemeProvider theme={theme}>
+          <AuthProvider>
+            <Routes />
+          </AuthProvider>
+        </ThemeProvider>
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 };
 
