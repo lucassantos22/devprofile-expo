@@ -42,7 +42,7 @@ export const EmailTitle = styled.Text`
   text-transform: uppercase;
 `;
 
-export const EmailData = styled.View`
+export const EmailData = styled.Text`
   font-family: ${({ theme }) => theme.fonts.regular};
   color: ${({ theme }) => theme.colors.primary};
   font-size: ${RFValue(14)}px;
