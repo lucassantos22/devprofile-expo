@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { Alert } from 'react-native';
 
 import {
@@ -26,17 +27,15 @@ import { User } from '../../components/User';
 export const Home: React.FunctionComponent = () => {
   const [users, setUsers] = useState<IUser[]>([]);
   const { user, signOut } = useAuth();
+  const { navigate } = useNavigation<any>();
 
   useEffect(() => {
-    async function fetch() {
-      const res = await api.get('users');
-      setUsers(res.data);
-    }
-
-    fetch();
+    const loadUsers = async () => {
+      const response = await api.get('users');
+      setUsers(response.data);
+    };
+    loadUsers();
   }, []);
-
-  console.log(users);
 
   function handleSignOut() {
     Alert.alert(`Hi ${user.name}!`, 'Do you really want to sign out?', [
@@ -46,6 +45,10 @@ export const Home: React.FunctionComponent = () => {
       },
       { text: 'Yes', onPress: signOut },
     ]);
+  }
+
+  function handleUserDetails(userId: string) {
+    navigate('UserDetails', { userId });
   }
 
   return (
@@ -72,7 +75,7 @@ export const Home: React.FunctionComponent = () => {
         data={users}
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
-          <User data={item} onPress={() => console.log('oi')} />
+          <User data={item} onPress={() => handleUserDetails(item.id)} />
         )}
         ListHeaderComponent={<UserListHeader>Users</UserListHeader>}
         ListEmptyComponent={
