@@ -2,6 +2,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Home } from '../pages/Home';
 import { UserDetails } from '../pages/UserDetails';
+import { UserProfile } from '../pages/UserProfile';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
@@ -10,6 +11,7 @@ export const AppRoutes: React.FunctionComponent = () => {
     <Navigator initialRouteName="Home" screenOptions={{ headerShown: false }}>
       <Screen name="Home" component={Home} />
       <Screen name="UserDetails" component={UserDetails} />
+      <Screen name="UserProfile" component={UserProfile} />
     </Navigator>
   );
 };
