@@ -20,6 +20,7 @@ import {
 } from './styles';
 import avatarDefault from '../../assets/avatar01.jpeg';
 import { useAuth } from '../../context/AuthContext';
+import { Button } from '../../components/Form/Button';
 
 export const UserProfile: React.FunctionComponent = () => {
   const { user } = useAuth();
@@ -53,6 +54,8 @@ export const UserProfile: React.FunctionComponent = () => {
           <EmailTitle>EMAIL</EmailTitle>
           <EmailData>{user.email}</EmailData>
         </UserEmailDetail>
+        <Button title="Edit" onPress={() => {}} />
+        <Button title="Change password" onPress={() => {}} />
       </Content>
     </Container>
   );
