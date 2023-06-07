@@ -56,7 +56,7 @@ export const Home: React.FunctionComponent = () => {
       <Header>
         <UserWrapper>
           <UserInfo>
-            <UserAvatarButton>
+            <UserAvatarButton onPress={() => navigate('UserProfile')}>
               <UserAvatar
                 source={
                   user.avatar_url ? { uri: user.avatar_url } : avatarDefault
