@@ -54,7 +54,12 @@ export const UserProfile: React.FunctionComponent = () => {
           <EmailTitle>EMAIL</EmailTitle>
           <EmailData>{user.email}</EmailData>
         </UserEmailDetail>
-        <Button title="Edit" onPress={() => {}} />
+        <Button
+          title="Edit"
+          onPress={() => {
+            navigation.navigate('UserProfileEdit');
+          }}
+        />
         <Button title="Change password" onPress={() => {}} />
       </Content>
     </Container>
