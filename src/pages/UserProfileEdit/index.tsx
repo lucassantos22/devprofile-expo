@@ -17,13 +17,9 @@ import {
   GoBackButton,
   Header,
   HeaderTile,
-  HeaderTop,
-  Logo,
-  PhotoContainer,
   Title,
   UserAvatar,
 } from './styles';
-import logo from '../../assets/logo.png';
 import { Icon } from '../SignIn/styles';
 import { InputControl } from '../../components/Form/InputControl';
 import { useAuth } from '../../context/AuthContext';
@@ -48,7 +44,13 @@ export const UserProfileEdit: React.FunctionComponent = () => {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<FieldValues>({ resolver: yupResolver(formSchema) });
+  } = useForm<FieldValues>({
+    resolver: yupResolver(formSchema),
+    defaultValues: {
+      name: user.name,
+      email: user.email,
+    },
+  });
 
   async function handleProfileEdit({ name, email }: IFormInput) {
     const data = {
@@ -76,22 +78,17 @@ export const UserProfileEdit: React.FunctionComponent = () => {
       >
         <Container>
           <Header>
-            <HeaderTop>
-              <GoBackButton onPress={() => navigation.goBack()}>
-                <Icon name="chevron-left" />
-              </GoBackButton>
-              <HeaderTile>Your Profile</HeaderTile>
-            </HeaderTop>
-            <PhotoContainer>
-              <UserAvatar
-                source={
-                  user.avatar_url ? { uri: user.avatar_url } : avatarDefault
-                }
-              />
-            </PhotoContainer>
+            <GoBackButton onPress={() => navigation.goBack()}>
+              <Icon name="chevron-left" />
+            </GoBackButton>
+            <HeaderTile>Your profile</HeaderTile>
+            <UserAvatar
+              source={
+                user.avatar_url ? { uri: user.avatar_url } : avatarDefault
+              }
+            />
           </Header>
           <Content>
-            <Logo source={logo} />
             <Title>Edit your profile</Title>
             <InputControl
               control={control}
@@ -109,7 +106,11 @@ export const UserProfileEdit: React.FunctionComponent = () => {
               keyboardType="email-address"
               error={errors.email && errors.email.message}
             />
-            <Button title="Create" onPress={handleSubmit(handleProfileEdit)} />
+            <Button
+              title="Edit"
+              onPress={handleSubmit(handleProfileEdit)}
+              disabled={!!errors.name || !!errors.email}
+            />
           </Content>
         </Container>
       </ScrollView>
