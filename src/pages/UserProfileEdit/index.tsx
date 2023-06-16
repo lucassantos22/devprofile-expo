@@ -38,7 +38,7 @@ const formSchema = yup.object({
 });
 
 export const UserProfileEdit: React.FunctionComponent = () => {
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
   const navigation = useNavigation<any>();
   const {
     handleSubmit,
@@ -58,7 +58,8 @@ export const UserProfileEdit: React.FunctionComponent = () => {
       email,
     };
     try {
-      await api.put('profile', data);
+      const res = await api.put('profile', data);
+      updateUser(res.data);
       Alert.alert('Profile updated!', 'Your profile has been updated');
       navigation.goBack();
     } catch (error) {
