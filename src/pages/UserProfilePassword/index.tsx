@@ -26,7 +26,7 @@ import {
 import { useAuth } from '../../context/AuthContext';
 import avatarDefault from '../../assets/avatar02.png';
 
-interface ScreenNavigationProps {
+interface ScreenNavigationProp {
   goBack: () => void;
 }
 
@@ -35,12 +35,12 @@ interface IFormInputs {
 }
 
 const formSchema = yup.object({
-  old_password: yup.string().required('Required field.'),
-  password: yup.string().required('Required field.'),
+  old_password: yup.string().required('Campo obrigatório.'),
+  password: yup.string().required('Campo obrigatório.'),
   password_confirmation: yup
     .string()
-    .required('Required field.')
-    .oneOf([yup.ref('password'), null], 'Incorrect confirmation.'),
+    .required('Campo obrigatório.')
+    .oneOf([yup.ref('password')], 'Confirmação incorreta.'),
 });
 
 export const UserProfilePassword: React.FunctionComponent = () => {
@@ -53,10 +53,12 @@ export const UserProfilePassword: React.FunctionComponent = () => {
     resolver: yupResolver(formSchema),
   });
 
-  const { goBack } = useNavigation<ScreenNavigationProps>();
+  const { goBack } = useNavigation<ScreenNavigationProp>();
 
   const handleUpdatePassword = async (form: IFormInputs) => {
     const data = {
+      name: user.name,
+      email: user.email,
       old_password: form.old_password,
       password: form.password,
       password_confirmation: form.password_confirmation,
@@ -64,10 +66,12 @@ export const UserProfilePassword: React.FunctionComponent = () => {
 
     try {
       const response = await api.put('profile', data);
+      console.log(response.data);
       updateUser(response.data);
       Alert.alert('Success', 'Password updated.');
       goBack();
     } catch (error) {
+      //console.log(JSON.stringify(error));
       Alert.alert('Error', 'Password could not be updated.');
     }
   };
@@ -95,29 +99,46 @@ export const UserProfilePassword: React.FunctionComponent = () => {
             />
           </Header>
           <Content>
-            <Title>Edit your profile</Title>
+            <Title>Change password</Title>
             <InputControl
               autoCapitalize="none"
               autoCorrect={false}
               control={control}
-              name="name"
-              placeholder="Full name"
-              error={errors.name && errors.name.message}
+              secureTextEntry
+              name="old_password"
+              placeholder="Current password"
+              error={errors.old_password && errors.old_password.message}
             />
             <InputControl
               autoCapitalize="none"
               autoCorrect={false}
               control={control}
-              name="email"
-              placeholder="Email"
-              keyboardType="email-address"
-              error={errors.email && errors.email.message}
+              secureTextEntry
+              name="password"
+              placeholder="Nova senha"
+              error={errors.password && errors.password.message}
+            />
+            <InputControl
+              autoCapitalize="none"
+              autoCorrect={false}
+              control={control}
+              secureTextEntry
+              name="password_confirmation"
+              placeholder="Password confirmation"
+              error={
+                errors.password_confirmation &&
+                errors.password_confirmation.message
+              }
             />
 
             <Button
               title="Save"
-              onPress={handleSubmit(handleProfileEdit)}
-              disabled={!!errors.name || !!errors.email}
+              onPress={handleSubmit(handleUpdatePassword)}
+              disabled={
+                !!errors.old_password ||
+                !!errors.password ||
+                !!errors.password_confirmation
+              }
             />
           </Content>
         </Container>

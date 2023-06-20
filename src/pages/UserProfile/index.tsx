@@ -60,7 +60,10 @@ export const UserProfile: React.FunctionComponent = () => {
             navigation.navigate('UserProfileEdit');
           }}
         />
-        <Button title="Change password" onPress={() => {}} />
+        <Button
+          title="Change password"
+          onPress={() => navigation.navigate('UserProfilePassword')}
+        />
       </Content>
     </Container>
   );
