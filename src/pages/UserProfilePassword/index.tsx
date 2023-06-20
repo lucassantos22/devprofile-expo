@@ -35,12 +35,12 @@ interface IFormInputs {
 }
 
 const formSchema = yup.object({
-  old_password: yup.string().required('Campo obrigatório.'),
-  password: yup.string().required('Campo obrigatório.'),
+  old_password: yup.string().required('Required field.'),
+  password: yup.string().required('Required field.'),
   password_confirmation: yup
     .string()
-    .required('Campo obrigatório.')
-    .oneOf([yup.ref('password'), null], 'Confirmação incorreta.'),
+    .required('Required field.')
+    .oneOf([yup.ref('password'), null], 'Incorrect confirmation.'),
 });
 
 export const UserProfilePassword: React.FunctionComponent = () => {
@@ -65,13 +65,10 @@ export const UserProfilePassword: React.FunctionComponent = () => {
     try {
       const response = await api.put('profile', data);
       updateUser(response.data);
-      Alert.alert('Senha atualizada', 'Senha atualizada com sucesso.');
+      Alert.alert('Success', 'Password updated.');
       goBack();
     } catch (error) {
-      Alert.alert(
-        'Erro ao atualizar',
-        'Ocorreu um erro ao atualizar a senha. Tente novamente.',
-      );
+      Alert.alert('Error', 'Password could not be updated.');
     }
   };
 
@@ -90,7 +87,7 @@ export const UserProfilePassword: React.FunctionComponent = () => {
             <GoBackButton onPress={goBack}>
               <Icon name="chevron-left" />
             </GoBackButton>
-            <HeaderTitle>Seu perfil</HeaderTitle>
+            <HeaderTitle>Your profile</HeaderTitle>
             <UserAvatar
               source={
                 user.avatar_url ? { uri: user.avatar_url } : avatarDefault
@@ -98,13 +95,13 @@ export const UserProfilePassword: React.FunctionComponent = () => {
             />
           </Header>
           <Content>
-            <Title>Editar dados do perfil</Title>
+            <Title>Edit your profile</Title>
             <InputControl
               autoCapitalize="none"
               autoCorrect={false}
               control={control}
               name="name"
-              placeholder="Nome completo"
+              placeholder="Full name"
               error={errors.name && errors.name.message}
             />
             <InputControl
@@ -118,7 +115,7 @@ export const UserProfilePassword: React.FunctionComponent = () => {
             />
 
             <Button
-              title="Salvar alterações"
+              title="Save"
               onPress={handleSubmit(handleProfileEdit)}
               disabled={!!errors.name || !!errors.email}
             />
