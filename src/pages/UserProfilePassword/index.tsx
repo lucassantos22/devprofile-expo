@@ -26,7 +26,7 @@ import {
 import { useAuth } from '../../context/AuthContext';
 import avatarDefault from '../../assets/avatar02.png';
 
-interface ScreenNavigationProp {
+interface ScreenNavigationProps {
   goBack: () => void;
 }
 
@@ -53,7 +53,7 @@ export const UserProfilePassword: React.FunctionComponent = () => {
     resolver: yupResolver(formSchema),
   });
 
-  const { goBack } = useNavigation<ScreenNavigationProp>();
+  const { goBack } = useNavigation<ScreenNavigationProps>();
 
   const handleUpdatePassword = async (form: IFormInputs) => {
     const data = {
